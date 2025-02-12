@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Message For You</title>
+
+    <link rel="stylesheet" href="./style.css"/>
+    <style>
+        /* Jumpscare image over everything */
+        #jumpscare {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: 9999; /* Ensures it's on top of everything */
+            display: none;
+        }
+
+        /* Disable the button initially */
+        #meBtn:disabled {
+            opacity: 0.5;
+            pointer-events: none; /* Prevent clicking */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="width: 200px; height: 200px; overflow: hidden; display: flex; justify-content: center; align-items: center;">
+            <img src="goobers.gif" alt="Kitty" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>        
+        <h1>Correct!! Are you ready for the last question</h1>
+        <h1>Make sure your volume is up</h1>
+
+        <div class="btn">
+            <a href="ask9.html" id="meBtn">Yes!</a> <!-- No onclick here, handled in JS -->
+        </div>
+    </div>
+
+    <!-- Jumpscare Image (Initially hidden) -->
+    <img id="jumpscare" src="foxy.gif" alt="Jumpscare Image">
+    <!-- Audio -->
+    <audio id="scream" src="foxy.mp3"></audio>
+
+    <script>
+        // Flag to track if the jumpscare has already been triggered
+        let jumpscarePlayed = false;
+
+        window.onload = function() {
+            let sound = document.getElementById("scream");
+            let image = document.getElementById("jumpscare");
+            let button = document.getElementById("meBtn");
+
+            // Disable the button initially
+            button.disabled = true;
+
+            // Wait for a click to trigger the sound and image (only if jumpscare hasn't played yet)
+            document.body.addEventListener("click", function() {
+                if (!jumpscarePlayed) {
+                    sound.play(); // Play sound
+                    image.style.display = "block"; // Show jumpscare image
+
+                    // Disable the button while the image is visible
+                    button.disabled = true;
+
+                    // Remove image after 3 seconds and enable the button
+                    setTimeout(() => {
+                        image.style.display = "none";
+                        button.disabled = false; // Re-enable the button after jumpscare
+                    }, 3000);
+
+                    // Set the flag so the jumpscare won't play again
+                    jumpscarePlayed = true;
+                }
+            });
+
+            // Handle button click (redirect after jumpscare)
+            button.addEventListener("click", function(e) {
+                if (jumpscarePlayed) {
+                    // Allow navigation if the jumpscare has already played
+                    return true;
+                } else {
+                    // Prevent navigation if the jumpscare hasn't played
+                    e.preventDefault();
+                }
+            });
+        };
+    </script>
+</body>
+</html>

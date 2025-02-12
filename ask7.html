@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Message For You</title>
+
+    <link rel="stylesheet" href="./style.css"/>
+</head>
+<body>
+    <div class="container">
+        <div style="width: 400px; height: 400px; overflow: hidden; display: flex; justify-content: center; align-items: center;">
+            <img src="whitney.jpeg" alt="Kitty" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>        
+        <h1>Who is the shorter one here</h1>
+
+        <div class="btn">
+            <a href="ask8.html" id="meBtn">You!</a>
+            <a href="#" id="youBtn">Me!</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("youBtn").addEventListener("click", function(event) {
+            event.preventDefault(); // Prevents navigation
+            let meBtn = document.getElementById("meBtn");
+            let currentSize = parseFloat(window.getComputedStyle(meBtn).getPropertyValue("font-size"));
+            meBtn.style.fontSize = (currentSize * 1.7) + "px"; // Increase size by 10%
+        });
+    </script>
+</body>
+</html>
